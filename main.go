@@ -29,9 +29,7 @@ func main() {
 		// Hashing password read from password file.
 		hash := fmt.Sprintf("%x", md5.Sum([]byte(password)))
 		if hash == md5hash {
-			fmt.Printf("Password found!\n md5:\n%s", password)
-		} else {
-			fmt.Println("Password not found...")
+			fmt.Printf("Password found!\n md5: %s\n", password)
 		}
 	}
 }
