@@ -24,7 +24,7 @@ func main() {
 		password := scanner.Text()
 		hash := fmt.Sprintf("%x", md5.Sum([]byte(password)))
 		if hash == md5hash {
-			fmt.Printf("Password found!\n md5: %s", password)
+			fmt.Printf("Password found!\n md5:\n%s", password)
 		}
 	}
 }
