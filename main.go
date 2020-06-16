@@ -8,23 +8,25 @@ import (
 	"os"
 )
 
-var md5hash string
-var sha256hash string
+var (
+	md5hash    string
+	sha256hash string
+)
 
 func MD5hasher() {
-	scanMd5 := bufio.NewScanner(wl)
+	scanMd5 := bufio.NewScanner(wl) // TODO handle wl file
 	for scanMd5.Scan() {
 		password := scanMd5.Text()
 		// Hashing password read from password file.
 		Mhash := fmt.Sprintf("%x", md5.Sum([]byte(password)))
-		if Md5hash == Mhash {
+		if md5hash == Mhash {
 			fmt.Printf("[!] Password Found!\nmd5: %s\n", password)
 		}
 	}
 }
 
 func SHA256hasher() {
-	scanSHA256 := bufio.NewScanner(wl)
+	scanSHA256 := bufio.NewScanner(wl) // TODO handle wl file
 	for scanSHA256.Scan() {
 		password := scanSHA256.Text()
 		S256hash := fmt.Sprintf("%x", sha256.Sum256([]byte(password)))
@@ -35,26 +37,26 @@ func SHA256hasher() {
 
 }
 
-
-	/* Opening word list I found online
-	   this word list will each password will
-	   be hashed and checked against the provided hash
-	   if match found password found.*/
-	   wl, err := os.Open("passwordlist.txt")
-	   if err != nil {
-		   fmt.Println("Error when opening passwordlist.txt")
-	   }
-	   defer wl.Close() // Clean up, close file to save resources.
-
 func main() {
 	// Scanning for user input
 	fmt.Println("1. MD5")
 	fmt.Println("2. SHA256")
-	
-	
-	fmt.Scanln(&md5hash)
+	// Password list I found online. Will be used to Match digest.
+	wl, err := os.Open("passwordlist.txt")
+	if err != nil {
+		fmt.Println("Error when opening passwordlist.txt")
+	}
+	defer wl.Close() // Clean up, close file to save resources.
 
-
-
+	var selection int
+	switch selection {
+	case 1:
+		MD5hasher()
+	case 2:
+		SHA256hasher()
+	case 3:
+		fmt.Println("Exiting...")
+		os.Exit(2)
+	}
 
 }
