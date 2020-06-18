@@ -40,6 +40,8 @@ func MD5hasher() {
 }
 
 func SHA256hasher() {
+	fmt.Println("Enter SHA256 Hash")
+	fmt.Scanln(&sha256hash)
 	scanSHA256 := bufio.NewScanner(wl) // TODO handle wl file
 	for scanSHA256.Scan() {
 		password := scanSHA256.Text()
