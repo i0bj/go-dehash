@@ -34,7 +34,8 @@ func main() {
 			fmt.Println("[!] Invalid Selection")
 			continue
 		}
-		if selection == 1 {
+		switch selection {
+		case 1:
 			fmt.Println("Enter md5 Hash")
 			fmt.Scanln(&md5hash)
 			scanMd5 := bufio.NewScanner(wl) // TODO handle wl file
@@ -44,19 +45,19 @@ func main() {
 				Mhash := fmt.Sprintf("%x", md5.Sum([]byte(password)))
 				if md5hash == Mhash {
 					fmt.Printf("[!] Password Found!\nmd5: %s\n", password)
-				} else if selection != 1 {
-					fmt.Println("Enter SHA256 Hash")
-					fmt.Scanln(&sha256hash)
-					scanSHA256 := bufio.NewScanner(wl) // TODO handle wl file
-					for scanSHA256.Scan() {
-						password := scanSHA256.Text()
-						S256hash := fmt.Sprintf("%x", sha256.Sum256([]byte(password)))
-						if sha256hash == S256hash {
-							fmt.Printf("[!] Password Found!\nSHA256:\n%s", password)
-						}
-						fmt.Printf("[!] Password Found!\nSHA256:\n%s", password)
-					}
 				}
+			}
+		case 2:
+			fmt.Println("Enter SHA256 Hash")
+			fmt.Scanln(&sha256hash)
+			scanSHA256 := bufio.NewScanner(wl) // TODO handle wl file
+			for scanSHA256.Scan() {
+				password := scanSHA256.Text()
+				S256hash := fmt.Sprintf("%x", sha256.Sum256([]byte(password)))
+				if sha256hash == S256hash {
+					fmt.Printf("[!] Password Found!\nSHA256:\n%s", password)
+				}
+				fmt.Printf("[!] Password Found!\nSHA256:\n%s", password)
 			}
 		}
 	}
