@@ -10,11 +10,6 @@ import (
 	"syscall"
 )
 
-var (
-	md5hash    string
-	sha256hash string
-)
-
 // goroutine to capture input from user to exit program.
 // can add additional code in function to clean up.
 func programExit() {
@@ -22,12 +17,15 @@ func programExit() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		fmt.Println("\r- Ctrl+C pressed. Program exiting..")
+		fmt.Println("\r[!] Ctrl+C pressed. Program exiting..")
 		os.Exit(0)
 	}()
 }
 
 func main() {
+
+	var md5hash string
+	var sha256hash string
 
 	programExit()
 
@@ -38,7 +36,7 @@ func main() {
 
 	defer wl.Close() // Clean up, close file to save resources.
 	// Scanning for user input
-	fmt.Println("[!] Select the hash whould you like to match: \n ")
+	fmt.Println("[+] Select the hash whould you like to match: \n ")
 	fmt.Println("1. MD5")
 	fmt.Println("2. SHA256")
 	// Password list I found online. Will be used to Match digest.
