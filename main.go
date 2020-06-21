@@ -6,6 +6,8 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 var (
@@ -13,7 +15,21 @@ var (
 	sha256hash string
 )
 
+// goroutine to capture input from user to exit program.
+// can add additional code in function to clean up.
+func programExit() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\r- Ctrl+C pressed. Program exiting..")
+		os.Exit(0)
+	}()
+}
+
 func main() {
+
+	programExit()
 
 	wl, err := os.Open("passwordlist.txt")
 	if err != nil {
